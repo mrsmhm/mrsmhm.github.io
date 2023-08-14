@@ -37,7 +37,7 @@
   <div class="video-container">
     <video id="video" controls></video>
     <div id="view-count"></div> </div>
-    
+
      <script> var video = document.getElementById('video'); var viewCount = document.getElementById('view-count');
      if (Hls.isSupported()) {
   var hls = new Hls({
@@ -49,11 +49,15 @@
     video.muted = true;
     video.play();
   });
-  hls.on(Hls.Events.FRAG_LOADED, function () {
-    // Update view count
-    var currentViewCount = parseInt(viewCount.innerHTML);
+hls.on(Hls.Events.FRAG_LOADED, function () {
+  // Update view count
+  var currentViewCount = parseInt(viewCount.innerHTML);
+  if (!isNaN(currentViewCount)) {
     viewCount.innerHTML = currentViewCount + 1;
-  });
+  } else {
+    viewCount.innerHTML = 1;
+  }
+});
 } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
   video.src = 'https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8';
   video.addEventListener('canplay', function () {
