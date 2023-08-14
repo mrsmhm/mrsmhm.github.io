@@ -52,29 +52,29 @@
       }
       
       if (Hls.isSupported()) {
-         var hls = new Hls({
-           debug: true,
-         });
-         hls.loadSource('https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8');
-         hls.attachMedia(video);
-         hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-           video.muted = true;
-           video.play();
-         });
-         
-         hls.on(Hls.Events.FRAG_LOADED, function () {
-           // افزایش تعداد بازدید و ذخیره آن در کوکی
-           currentViewCount = parseInt(viewCount.innerHTML);
-           currentViewCount++;
-           viewCount.innerHTML = currentViewCount;
-           setCookie("viewCount", currentViewCount, 365);
-         });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-         video.src = 'https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8';
-         video.addEventListener('canplay', function () {
-           video.play();
-         });
-      }
+   var hls = new Hls({
+     debug: true,
+   });
+   hls.loadSource('https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8');
+   hls.attachMedia(video);
+   hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+     video.muted = true;
+     video.play();
+   });
+   
+   hls.on(Hls.Events.FRAG_LOADED, function () {
+     // چک کردن اگر کوکی مربوط به تعداد بازدید وجود ندارد، تعداد بازدید را افزایش دهید و کوکی را ذخیره کنید
+     currentViewCount = parseInt(getCookie("viewCount"));
+     if (isNaN(currentViewCount)) {
+       viewCount.innerHTML = currentViewCount;
+       currentViewCount++;
+       viewCount.innerHTML = currentViewCount;
+       setCookie("viewCount", currentViewCount, 365);
+     }
+   });
+} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+   // متن مربوط به اپل پلیر
+}
      
       // تابع تنظیم کوکی
       function setCookie(name, value, days) {
