@@ -38,7 +38,15 @@
     <video id="video" controls></video>
     <div id="view-count"></div>
   </div>
-
+  
+  <script>
+    window.addEventListener('beforeunload', function() {
+      // بررسی اگر کوکی وجود دارد، آن را حذف کنید
+      if (getCookie("viewCount")) {
+        document.cookie = "viewCount=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      }
+    });
+  </script>
   <script> 
       var video = document.getElementById('video'); 
       var viewCount = document.getElementById('view-count');
@@ -98,7 +106,7 @@
        }
        return null;
       }
-      
+     
   </script>
 </body>
 </html>
