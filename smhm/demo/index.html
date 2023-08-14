@@ -38,75 +38,73 @@
     <video id="video" controls></video>
     <div id="view-count"></div>
   </div>
-  
+
   <script>
+    // تابع تنظیم کوکی
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // تابع دریافت کوکی
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
     window.addEventListener('beforeunload', function() {
       // بررسی اگر کوکی وجود دارد، آن را حذف کنید
       if (getCookie("viewCount")) {
         document.cookie = "viewCount=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       }
     });
-  </script>
-  <script> 
-      var video = document.getElementById('video'); 
-      var viewCount = document.getElementById('view-count');
-      
-      // چک کردن اگر کوکی مربوط به تعداد بازدید صفحه وجود دارد، آن را حاوی کنترل کنید
-      var currentViewCount = parseInt(getCookie("viewCount"));
-      if (!isNaN(currentViewCount)) {
-         viewCount.innerHTML = currentViewCount;
-      } else {
-         viewCount.innerHTML = 0; // تنظیم تعداد بازدید روی صفر اگر کوکی متناظر پیدا نشد
-      }
-      
-      if (Hls.isSupported()) {
-   var hls = new Hls({
-     debug: true,
-   });
-   hls.loadSource('https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8');
-   hls.attachMedia(video);
-   hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-     video.muted = true;
-     video.play();
-   });
-   
-   hls.on(Hls.Events.FRAG_LOADED, function () {
-     // چک کردن اگر کوکی مربوط به تعداد بازدید وجود ندارد، تعداد بازدید را افزایش دهید و کوکی را ذخیره کنید
-     currentViewCount = parseInt(getCookie("viewCount"));
-     if (isNaN(currentViewCount)) {
-       viewCount.innerHTML = currentViewCount;
-       currentViewCount++;
-       viewCount.innerHTML = currentViewCount;
-       setCookie("viewCount", currentViewCount, 365);
-     }
-   });
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-   // متن مربوط به اپل پلیر
-}
-     
-      // تابع تنظیم کوکی
-      function setCookie(name, value, days) {
-       var expires = "";
-       if (days) {
-         var date = new Date();
-         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-         expires = "; expires=" + date.toUTCString();
-       }
-       document.cookie = name + "=" + (value || "") + expires + "; path=/";
-      }
-     
-      // تابع دریافت کوکی
-      function getCookie(name) {
-       var nameEQ = name + "=";
-       var ca = document.cookie.split(';');
-       for (var i = 0; i < ca.length; i++) {
-         var c = ca[i];
-         while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-       }
-       return null;
-      }
-     
+
+    var video = document.getElementById('video');
+    var viewCount = document.getElementById('view-count');
+
+    // چک کردن اگر کوکی مربوط به تعداد بازدید صفحه وجود دارد، آن را حاوی کنترل کنید
+    var currentViewCount = parseInt(getCookie("viewCount"));
+    if (!isNaN(currentViewCount)) {
+      viewCount.innerHTML = currentViewCount;
+    } else {
+      viewCount.innerHTML = 0; // تنظیم تعداد بازدید روی صفر اگر کوکی متناظر پیدا نشد
+    }
+
+    if (Hls.isSupported()) {
+      var hls = new Hls({
+        debug: true,
+      });
+      hls.loadSource('https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8');
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+        video.muted = true;
+        video.play();
+      });
+
+      hls.on(Hls.Events.FRAG_LOADED, function () {
+        // چک کردن اگر کوکی مربوط به تعداد بازدید وجود ندارد، تعداد بازدید را افزایش دهید و کوکی را ذخیره کنید
+        currentViewCount = parseInt(getCookie("viewCount"));
+        if (isNaN(currentViewCount)) {
+          currentViewCount = 0;
+        }
+        currentViewCount++;
+        viewCount.innerHTML = currentViewCount;
+        setCookie("viewCount", currentViewCount, 365);
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // متن مربوط به اپل پلیر
+    }
   </script>
 </body>
 </html>
