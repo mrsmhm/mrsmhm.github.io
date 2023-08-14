@@ -20,6 +20,15 @@
       height: 100%;
       object-fit: cover;
     }
+   
+    #view-count {
+      position: absolute;
+      top: 40px;
+      left: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -27,26 +36,30 @@
 
   <div class="video-container">
     <video id="video" controls></video>
-  </div>
-
-  <script>
-    var video = document.getElementById('video');
-    if (Hls.isSupported()) {
-      var hls = new Hls({
-        debug: true,
-      });
-      hls.loadSource('https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8');
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-        video.muted = true;
-        video.play();
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = 'https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8';
-      video.addEventListener('canplay', function () {
-        video.play();
-      });
-    }
+    <div id="view-count"></div> </div>
+    
+     <script> var video = document.getElementById('video'); var viewCount = document.getElementById('view-count');
+     if (Hls.isSupported()) {
+  var hls = new Hls({
+    debug: true,
+  });
+  hls.loadSource('https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8');
+  hls.attachMedia(video);
+  hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+    video.muted = true;
+    video.play();
+  });
+  hls.on(Hls.Events.FRAG_LOADED, function () {
+    // Update view count
+    var currentViewCount = parseInt(viewCount.innerHTML);
+    viewCount.innerHTML = currentViewCount + 1;
+  });
+} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+  video.src = 'https://stream.alkafeel.net/live/alkafeel/rAa5PGot1/manifest.m3u8';
+  video.addEventListener('canplay', function () {
+    video.play();
+  });
+}  
   </script>
 </body>
 </html>
