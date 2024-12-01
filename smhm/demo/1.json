@@ -1,6 +1,6 @@
 [
     {
-      "عکس": "https://raw.githubusercontent.com/mrsmhm/mrsmhm.github.io/main/smhm/demo/img.jpg",
+      "عکس": "https://filmr.ir/wp-content/uploads/2022/07/Thor-Love-and-Thunder-cover-min.jpg",
       "متن": "پخش زنده حرم امام حسین",
       "لینک": "https://mrsmhm.github.io/smhm/demo/index.html"
     },
@@ -8,5 +8,15 @@
       "عکس": "https://filmr.ir/wp-content/uploads/2022/07/Thor-Love-and-Thunder-cover-min.jpg",
       "متن": "پخش زنده حرم امام رضا",
       "لینک": "https://mrsmhm.github.io/smhm/demo/Reza.html"
+    },
+    {
+      "عکس": "https://filmr.ir/wp-content/uploads/2022/07/Thor-Love-and-Thunder-cover-min.jpg",
+      "متن": "پخش زنده حرم امام رضا",
+      "لینک": "https://mrsmhm.github.io/smhm/demo/Reza1.html"
+    },
+    {
+      "عکس": "https://filmr.ir/wp-content/uploads/2022/07/Thor-Love-and-Thunder-cover-min.jpg",
+      "متن": "پخش زنده حرم امام کاظم",
+      "لینک": "https://mrsmhm.github.io/smhm/demo/ka.html"
     }
-  ]
+ ]
