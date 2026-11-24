@@ -35,14 +35,14 @@
       var hls = new Hls({
         debug: true,
       });
-      hls.loadSource('https://stream01.nasimrezvan.com/hls/nCqGTHytkVFziVPWBLqkdQYK/index.m3u8');
+      hls.loadSource('https://newlive.nasimrezvan.com/hls/Haramrazavi/720p/index.m3u8');
       hls.attachMedia(video);
       hls.on(Hls.Events.MEDIA_ATTACHED, function () {
         video.muted = true;
         video.play();
       });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = 'https://stream01.nasimrezvan.com/hls/nCqGTHytkVFziVPWBLqkdQYK/index.m3u8';
+      video.src = 'https://newlive.nasimrezvan.com/hls/Haramrazavi/720p/index.m3u8';
       video.addEventListener('canplay', function () {
         video.play();
       });
